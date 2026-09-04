@@ -1,0 +1,21 @@
+# Secrets / local config
+.env
+.env.local
+
+# Terraform
+infra/terraform/.terraform/
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.*
+infra/terraform/.terraform.lock.hcl
+infra/terraform/terraform.tfvars
+infra/terraform/*.tfplan
+
+# Python
+infra/scripts/__pycache__/
+infra/scripts/.generated.env
+
+# Webapp (Node / .NET build output)
+webapp/frontend/node_modules/
+webapp/frontend/dist/
+webapp/backend/**/bin/
+webapp/backend/**/obj/

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "languageVersion": "2.0",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.39.26.7824",
+      "templateHash": "4922226160292137631"
+    }
+  },
+  "parameters": {
+    "environmentName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name suffix for the Entra app (e.g., environment name)"
+      }
+    },
+    "serviceManagementReference": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Service Management Reference GUID (required by some orgs)"
+      }
+    }
+  },
+  "variables": {
+    "chatReadWriteScopeId": "[guid(resourceGroup().id, parameters('environmentName'), 'Chat.ReadWrite')]"
+  },
+  "imports": {
+    "microsoftGraphV1": {
+      "provider": "MicrosoftGraph",
+      "version": "1.0.0"
+    }
+  },
+  "resources": {
+    "app": {
+      "import": "microsoftGraphV1",
+      "type": "Microsoft.Graph/applications@v1.0",
+      "properties": {
+        "uniqueName": "[format('ai-foundry-agent-{0}', parameters('environmentName'))]",
+        "displayName": "[format('ai-foundry-agent-{0}', parameters('environmentName'))]",
+        "signInAudience": "AzureADMyOrg",
+        "serviceManagementReference": "[if(empty(parameters('serviceManagementReference')), null(), parameters('serviceManagementReference'))]",
+        "spa": {
+          "redirectUris": [
+            "http://localhost:5173",
+            "http://localhost:8080"
+          ]
+        },
+        "api": {
+          "oauth2PermissionScopes": [
+            {
+              "adminConsentDescription": "Allows the app to read and write chat messages",
+              "adminConsentDisplayName": "Read and write chat messages",
+              "id": "[variables('chatReadWriteScopeId')]",
+              "isEnabled": true,
+              "type": "User",
+              "userConsentDescription": "Allows the app to read and write your chat messages",
+              "userConsentDisplayName": "Read and write your chat messages",
+              "value": "Chat.ReadWrite"
+            }
+          ]
+        }
+      }
+    },
+    "sp": {
+      "import": "microsoftGraphV1",
+      "type": "Microsoft.Graph/servicePrincipals@v1.0",
+      "properties": {
+        "appId": "[reference('app').appId]"
+      },
+      "dependsOn": [
+        "app"
+      ]
+    }
+  },
+  "outputs": {
+    "clientAppId": {
+      "type": "string",
+      "value": "[reference('app').appId]"
+    },
+    "appObjectId": {
+      "type": "string",
+      "value": "[reference('app').id]"
+    }
+  }
+}

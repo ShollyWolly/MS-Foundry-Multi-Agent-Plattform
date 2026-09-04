@@ -1,0 +1,9 @@
+name: multi-agent-platform
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - azure-identity>=1.17
+      - azure-ai-projects>=2.3.0

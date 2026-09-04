@@ -1,0 +1,10 @@
+subscription_id              = "00000000-0000-0000-0000-000000000000"
+service_principal_client_id  = "00000000-0000-0000-0000-000000000000"
+
+# Optional overrides — names are all definable:
+# resource_group_name   = "rg-multi-agent-platform"
+# location              = "swedencentral"
+# foundry_account_name  = "foundry-multi-agent-platform"
+# foundry_project_name  = "multi-agent-platform"
+# model_deployment_name = "gpt-5-mini"
+# model_name            = "gpt-5-mini"

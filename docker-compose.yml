@@ -1,0 +1,14 @@
+services:
+  webapp:
+    build:
+      context: ./webapp
+      dockerfile: deployment/docker/frontend.Dockerfile
+      args:
+        AUTH_MODE: mock
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+      - infra/scripts/.generated.env
+    environment:
+      AUTH_MODE: mock
