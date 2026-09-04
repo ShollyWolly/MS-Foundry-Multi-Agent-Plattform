@@ -1,0 +1,37 @@
+{# Shared section/table rendering — every layout includes this so the sections/tables data shape
+   (see lib/tables.py's dataframe_to_table) only has one rendering implementation, even though
+   each layout wraps it in different chrome (banner, cover page, cards, ledger, ...). #}
+{% for section in sections %}
+<h2>{{ section.heading }}</h2>
+{% for para in section.narrative %}
+<p class="exec-summary">{{ para }}</p>
+{% endfor %}
+{% for table in section.tables %}
+<p class="table-caption">{{ table.caption }}</p>
+<table>
+  <thead>
+    {% if table.header_groups %}
+    <tr>
+      {% for g in table.header_groups %}
+      <th colspan="{{ g.colspan }}">{{ g.label }}</th>
+      {% endfor %}
+    </tr>
+    {% endif %}
+    <tr>
+      {% for col in table.columns %}
+      <th>{{ col }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in table.rows %}
+    <tr class="{{ row.class }}">
+      {% for cell in row.cells %}
+      <td>{{ cell }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endfor %}
+{% endfor %}

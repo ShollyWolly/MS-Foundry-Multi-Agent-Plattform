@@ -13,6 +13,10 @@ infra/terraform/*.tfplan
 # Python
 infra/scripts/__pycache__/
 infra/scripts/.generated.env
+**/__pycache__/
+
+# Generated RAG example data (regenerate via dataGeneration/generate_reports.py, don't commit)
+dataGeneration/output/
 
 # Webapp (Node / .NET build output)
 webapp/frontend/node_modules/

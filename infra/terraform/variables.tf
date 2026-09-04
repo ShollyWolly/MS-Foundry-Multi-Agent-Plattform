@@ -57,6 +57,60 @@ variable "model_capacity" {
   default     = 10
 }
 
+variable "embedding_deployment_name" {
+  description = "Deployment name for the text embedding model, used by the ingestion pipeline (ingestion/) to embed document chunks for Azure AI Search."
+  type        = string
+  default     = "text-embedding-3-small"
+}
+
+variable "embedding_model_name" {
+  description = "Underlying embedding model name to deploy."
+  type        = string
+  default     = "text-embedding-3-small"
+}
+
+variable "embedding_model_version" {
+  description = "Embedding model version to deploy."
+  type        = string
+  default     = "1"
+}
+
+variable "embedding_model_sku_name" {
+  description = "SKU name for the embedding deployment. \"Standard\" isn't offered for text-embedding-3-small in swedencentral — GlobalStandard is the available option with quota."
+  type        = string
+  default     = "GlobalStandard"
+}
+
+variable "embedding_capacity" {
+  description = "Capacity (in thousands of tokens per minute) for the embedding deployment."
+  type        = number
+  default     = 10
+}
+
+variable "search_service_name" {
+  description = "Name of the Azure AI Search service used by the ingestion pipeline (ingestion/). Must be globally unique."
+  type        = string
+  default     = "search-multi-agent-platform"
+}
+
+variable "search_service_sku" {
+  description = "Azure AI Search SKU. \"free\" is $0/month (50MB, 3 indexes) — comfortably enough for the ~10 small documents this project indexes."
+  type        = string
+  default     = "free"
+}
+
+variable "reports_storage_account_name" {
+  description = "Name of the ADLS Gen2 storage account holding the report PDFs and pre-processed sidecar text blobs that Azure AI Search's indexers read from. Must be globally unique, 3-24 lowercase alphanumeric characters."
+  type        = string
+  default     = "stmultiagentplatform"
+}
+
+variable "blob_soft_delete_retention_days" {
+  description = "Blob soft-delete retention window, in days. Must exceed the interval between indexer runs by a comfortable margin — the indexer's native blob soft-delete deletion detection policy relies on soft-deleted blobs still being present (in tombstone form) when the indexer next runs."
+  type        = number
+  default     = 7
+}
+
 variable "cosmosdb_account_name" {
   description = "Name of the Cosmos DB account used for per-user conversation metadata (not chat message content, which stays in Foundry). Must be globally unique."
   type        = string

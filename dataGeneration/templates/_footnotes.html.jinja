@@ -1,0 +1,9 @@
+{% if footnotes %}
+<div class="footnotes">
+  <ol>
+  {% for note in footnotes %}
+    <li>{{ note }}</li>
+  {% endfor %}
+  </ol>
+</div>
+{% endif %}

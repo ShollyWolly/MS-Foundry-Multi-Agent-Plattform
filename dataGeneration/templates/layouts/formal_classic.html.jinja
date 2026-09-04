@@ -1,0 +1,72 @@
+{% extends "base.html.jinja" %}
+{% block extra_style %}
+<style>
+  body { font-family: {{ department.body_font }}; }
+  .cover {
+    height: 22cm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    break-after: page;
+  }
+  .cover .rule {
+    width: 2.5cm;
+    border-top: 2pt solid {{ department.primary_color }};
+    margin: 10pt 0 14pt 0;
+  }
+  .cover h1 {
+    font-family: {{ department.heading_font }};
+    font-size: 22pt;
+    color: {{ department.primary_color }};
+    margin: 0;
+    font-weight: 400;
+  }
+  .cover .doc-meta {
+    font-size: 10pt;
+    color: #555555;
+    margin-top: 10pt;
+  }
+  .cover .prepared-note {
+    font-size: 8.5pt;
+    color: #888888;
+    margin-top: 40pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  h2 {
+    font-family: {{ department.heading_font }};
+    font-weight: 700;
+    color: {{ department.primary_color }};
+    font-size: 13pt;
+    margin-top: 20pt;
+    margin-bottom: 6pt;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 3pt;
+  }
+  p.exec-summary, .footnotes {
+    font-family: {{ department.body_font }};
+  }
+  th {
+    background-color: #eef0f4;
+    color: {{ department.primary_color }};
+    font-family: {{ department.heading_font }};
+    font-weight: 700;
+  }
+  tr.total td {
+    border-top: 1.5pt solid {{ department.primary_color }};
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="cover">
+  <div class="rule"></div>
+  <h1 class="doc-title">{{ title }}</h1>
+  <div class="doc-meta">{{ company_name }}<br>{{ report_date }}</div>
+  <div class="prepared-note">Prepared by {{ prepared_by }}</div>
+</div>
+
+{% include "_sections.html.jinja" %}
+{% include "_footnotes.html.jinja" %}
+{% endblock %}

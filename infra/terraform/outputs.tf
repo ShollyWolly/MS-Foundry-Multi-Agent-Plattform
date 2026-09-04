@@ -2,6 +2,11 @@ output "resource_group_name" {
   value = azurerm_resource_group.this.name
 }
 
+output "subscription_id" {
+  description = "Used by ingestion/lib/azure_clients.py to build the managed-identity form of the storage connection string for the Search indexer's blob data source."
+  value       = var.subscription_id
+}
+
 output "foundry_account_name" {
   value = azurerm_cognitive_account.foundry.name
 }
@@ -25,4 +30,20 @@ output "cosmosdb_database_name" {
 
 output "cosmosdb_conversations_container_name" {
   value = azurerm_cosmosdb_sql_container.conversations.name
+}
+
+output "embedding_deployment_name" {
+  value = azurerm_cognitive_deployment.embedding.name
+}
+
+output "search_service_name" {
+  value = azurerm_search_service.this.name
+}
+
+output "search_service_endpoint" {
+  value = azurerm_search_service.this.endpoint
+}
+
+output "reports_storage_account_name" {
+  value = azurerm_storage_account.reports.name
 }

@@ -1,0 +1,60 @@
+{% extends "base.html.jinja" %}
+{% block extra_style %}
+<style>
+  body { font-family: {{ department.body_font }}; }
+  .header {
+    border-bottom: 1px dashed {{ department.primary_color }};
+    padding-bottom: 8pt;
+    margin-bottom: 12pt;
+  }
+  .header h1 {
+    font-size: 15pt;
+    letter-spacing: {{ department.letter_spacing }};
+    color: {{ department.primary_color }};
+    margin: 0 0 4pt 0;
+  }
+  .header .doc-meta {
+    font-size: 8.5pt;
+    color: #666666;
+  }
+  h2 {
+    font-size: 11pt;
+    color: {{ department.primary_color }};
+    margin-top: 16pt;
+    margin-bottom: 5pt;
+    border-bottom: 1px dashed #bbbbbb;
+    padding-bottom: 3pt;
+  }
+  table { font-size: 8.5pt; }
+  th {
+    background-color: #f2f2f2;
+    color: {{ department.primary_color }};
+    border-bottom: 1px solid {{ department.primary_color }};
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  td {
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px dotted #cccccc;
+  }
+  tbody tr:nth-child(even) {
+    background-color: transparent;
+  }
+  tr.total td {
+    border-top: 1pt solid {{ department.primary_color }};
+    border-bottom: none;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="header">
+  <h1 class="doc-title">{{ title }}</h1>
+  <div class="doc-meta">{{ company_name }} / {{ report_date }} / prepared by: {{ prepared_by }}</div>
+</div>
+
+{% include "_sections.html.jinja" %}
+{% include "_footnotes.html.jinja" %}
+{% endblock %}

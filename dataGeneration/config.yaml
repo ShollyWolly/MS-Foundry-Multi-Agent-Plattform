@@ -1,0 +1,59 @@
+# Configuration for the synthetic BI report generator (dataGeneration/generate_reports.py).
+# Edit this file to control what gets generated without touching any Python code.
+
+company:
+  name: "Contoso Analytics Group"
+  prepared_by: "Business Intelligence Team"
+  report_date: "March 31, 2026"
+  # Grounds LLM-generated narrative text (see lib/narrative.py) so summaries stay consistent
+  # with one fictional company across all reports, instead of reading like generic filler.
+  description: >
+    Contoso Analytics Group is a mid-size B2B software company (roughly 1,500 employees) that
+    sells business intelligence and data analytics products — including Insight Suite, Forecast
+    Pro, DataFlow, Analytics Hub, PulseBI, and MetricWorks — to enterprise customers across North
+    America, EMEA, APAC, and LATAM. It operates on a subscription (SaaS) revenue model with
+    Enterprise, Mid-Market, and SMB customer segments.
+
+generation:
+  output_dir: "output"
+
+  # Fiscal years to generate a full report+origin+golden set for. Each entry produces one
+  # complete pass through every report below. [2025] preserves the original single-year
+  # behavior; add more entries (e.g. [2023, 2024, 2025]) to generate multiple years. Output
+  # filenames are suffixed with the fiscal year (e.g. "..._FY2025.pdf") so different years don't
+  # collide.
+  years:
+    - 2016
+    - 2017
+    - 2018
+    - 2019
+    - 2020
+    - 2021
+    - 2022
+    - 2023
+    - 2024
+    - 2025
+
+  # Which reports to generate. Comment out / remove entries to skip them (report id = the
+  # module name under reports/, matches the "NN_..." PDF filename prefix minus the number).
+  reports:
+    - quarterly_sales
+    - financial_statement
+    - headcount
+    - inventory
+    - marketing_campaigns
+    - churn_retention
+    - product_profitability
+    - budget_vs_actual
+    - travel_expenses
+    - regional_kpi_scorecard
+
+  # If false, executive summaries always use each report's static fallback sentence and no
+  # calls are made to the Foundry model deployment — useful for fast iteration on layout/data
+  # without needing Azure credentials or waiting on API round-trips.
+  use_llm_narrative: true
+
+  # Reasoning effort passed to the gpt-5-mini deployment for narrative generation (see
+  # lib/llm.py) — "low" keeps the hidden-reasoning token budget small so short paragraphs don't
+  # get cut off with empty content. Only relevant when use_llm_narrative is true.
+  llm_reasoning_effort: "low"

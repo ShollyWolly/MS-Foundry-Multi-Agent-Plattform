@@ -1,0 +1,26 @@
+# Configuration for the RAG ingestion pipeline (ingestion/preprocess.py + setup_indexer.py).
+# Edit this file to change what gets indexed without touching Python code.
+
+input_dir: "../dataGeneration/output/raw"
+index_name: "reports-index"
+
+# Blob storage layout (see infra/terraform/main.tf's azurerm_storage_account.reports).
+raw_container: "reports-raw"
+sections_container: "reports-sections"
+
+# Fiscal year to tag a PDF with if it can't be determined from its sibling golden JSON (e.g.
+# during a transition period before dataGeneration always writes the `year` key). Report
+# identity (report_id/report_title/department/year) is normally read from the golden JSON
+# sidecar dataGeneration writes next to each PDF — not hand-maintained here.
+default_year: 2025
+
+chunking:
+  # Matches SplitSkill's maximum_page_length/page_overlap_length (token-unit) in setup_indexer.py.
+  narrative_max_tokens: 500
+  narrative_overlap_tokens: 50
+  # Table chunking still happens in Python (lib/chunk.py) — see CLAUDE.md for why.
+  table_max_tokens: 500
+
+# Heading text (case-insensitive) that marks a narrative section as "summary" rather than
+# "narrative" — every report's Executive Summary section uses this heading today.
+summary_heading: "Executive Summary"

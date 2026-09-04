@@ -1,0 +1,83 @@
+{% extends "base.html.jinja" %}
+{% block extra_style %}
+<style>
+  body { font-family: {{ department.body_font }}; }
+  .header {
+    margin-bottom: 4pt;
+  }
+  .header h1 {
+    font-family: {{ department.heading_font }};
+    font-size: 18pt;
+    color: {{ department.primary_color }};
+    margin: 0 0 2pt 0;
+  }
+  .header .doc-meta {
+    font-size: 9pt;
+    color: #666666;
+    padding-bottom: 10pt;
+    border-bottom: 3px solid {{ department.accent_color }};
+    margin-bottom: 14pt;
+  }
+  h2 {
+    font-family: {{ department.heading_font }};
+    color: {{ department.primary_color }};
+    font-size: 12.5pt;
+    margin-top: 20pt;
+    margin-bottom: 8pt;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10pt;
+    margin-bottom: 16pt;
+  }
+  .card {
+    background-color: {{ department.card_bg }};
+    border: 1px solid {{ department.accent_color }};
+    border-radius: 4pt;
+    padding: 10pt;
+    text-align: center;
+  }
+  .card .kpi-value {
+    display: block;
+    font-family: {{ department.heading_font }};
+    font-size: 16pt;
+    font-weight: 700;
+    color: {{ department.primary_color }};
+  }
+  .card .kpi-label {
+    font-size: 8pt;
+    color: #555555;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  th {
+    background-color: {{ department.card_bg }};
+    color: {{ department.primary_color }};
+    border-bottom: 2px solid {{ department.accent_color }};
+  }
+  tr.total td {
+    border-top: 1.5pt solid {{ department.primary_color }};
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="header">
+  <h1 class="doc-title">{{ title }}</h1>
+  <div class="doc-meta">{{ company_name }} &middot; {{ report_date }} &middot; Prepared by {{ prepared_by }}</div>
+</div>
+
+{% if kpi_tiles %}
+<div class="card-grid">
+  {% for tile in kpi_tiles %}
+  <div class="card">
+    <span class="kpi-value">{{ tile.value }}</span>
+    <span class="kpi-label">{{ tile.label }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% include "_sections.html.jinja" %}
+{% include "_footnotes.html.jinja" %}
+{% endblock %}

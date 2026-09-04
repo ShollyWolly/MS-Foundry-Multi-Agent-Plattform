@@ -1,0 +1,119 @@
+/* Structure-agnostic print mechanics shared by every department layout (templates/layouts/*).
+   Visual "skin" — colors, fonts, header/hero treatment — lives in each layout's own <style>
+   block (base.html.jinja's `extra_style` block), not here, so departments can look genuinely
+   different. This file only handles things every layout needs regardless of department:
+   page setup, multi-page table headers, and generic (overridable) table/footnote defaults. */
+
+@page {
+  size: A4;
+  margin: 2.4cm 1.8cm 2.2cm 1.8cm;
+
+  @top-center {
+    content: string(doc-title);
+    font-size: 8.5pt;
+    color: #666666;
+  }
+  @bottom-left {
+    content: "Confidential — Internal Use Only";
+    font-size: 8pt;
+    color: #999999;
+  }
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+    font-size: 8pt;
+    color: #999999;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: 10pt;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+h2 {
+  break-after: avoid;
+}
+
+p.exec-summary {
+  margin: 6pt 0 10pt 0;
+  text-align: justify;
+}
+
+p.table-caption {
+  font-size: 9pt;
+  font-weight: 600;
+  color: #333333;
+  margin: 10pt 0 4pt 0;
+  break-after: avoid;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10pt;
+  font-size: 8.5pt;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tfoot {
+  display: table-footer-group;
+}
+
+tr {
+  break-inside: avoid;
+}
+
+th, td {
+  border: 1px solid #d8d8d8;
+  padding: 4pt 6pt;
+  text-align: right;
+}
+
+/* Generic fallback header style — every layout overrides this with its own department color. */
+th {
+  background-color: #eeeeee;
+  font-weight: 600;
+  text-align: center;
+  color: #222222;
+}
+
+td:first-child, th:first-child {
+  text-align: left;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tr.subtotal td {
+  font-weight: 600;
+  background-color: #f0f4f8;
+}
+
+tr.total td {
+  font-weight: 700;
+  background-color: #dfe7f0;
+  border-top: 1.5pt solid #333333;
+}
+
+.footnotes {
+  margin-top: 12pt;
+  padding-top: 6pt;
+  border-top: 1px solid #dddddd;
+  font-size: 8pt;
+  color: #555555;
+}
+
+.footnotes ol {
+  margin: 0;
+  padding-left: 14pt;
+}

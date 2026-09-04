@@ -1,0 +1,83 @@
+{% extends "base.html.jinja" %}
+{% block extra_style %}
+<style>
+  body { font-family: {{ department.body_font }}; }
+  .hero {
+    background-color: {{ department.primary_color }};
+    color: #ffffff;
+    margin: -2.4cm -1.8cm 14pt -1.8cm;
+    padding: 1.4cm 1.8cm 1cm 1.8cm;
+  }
+  .hero h1 {
+    font-family: {{ department.heading_font }};
+    letter-spacing: {{ department.letter_spacing }};
+    text-transform: uppercase;
+    font-size: 20pt;
+    margin: 0 0 4pt 0;
+  }
+  .hero .doc-meta {
+    font-size: 9pt;
+    color: #ffffffcc;
+  }
+  h2 {
+    font-family: {{ department.heading_font }};
+    color: {{ department.primary_color }};
+    font-size: 12.5pt;
+    margin-top: 20pt;
+    margin-bottom: 6pt;
+    border-bottom: 2px solid {{ department.accent_color }};
+    padding-bottom: 3pt;
+  }
+  .kpi-row {
+    display: flex;
+    gap: 10pt;
+    margin: 0 0 16pt 0;
+  }
+  .kpi-tile {
+    flex: 1;
+    background-color: {{ department.accent_color }}22;
+    border-left: 4pt solid {{ department.primary_color }};
+    padding: 8pt 10pt;
+  }
+  .kpi-tile .kpi-value {
+    font-family: {{ department.heading_font }};
+    font-size: 15pt;
+    font-weight: 700;
+    color: {{ department.primary_color }};
+    display: block;
+  }
+  .kpi-tile .kpi-label {
+    font-size: 8pt;
+    color: #555555;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  th {
+    background-color: {{ department.primary_color }};
+    color: #ffffff;
+  }
+  tr.total td {
+    border-top: 1.5pt solid {{ department.primary_color }};
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="hero">
+  <h1 class="doc-title">{{ title }}</h1>
+  <div class="doc-meta">{{ company_name }} &middot; {{ report_date }} &middot; Prepared by {{ prepared_by }}</div>
+</div>
+
+{% if kpi_tiles %}
+<div class="kpi-row">
+  {% for tile in kpi_tiles %}
+  <div class="kpi-tile">
+    <span class="kpi-value">{{ tile.value }}</span>
+    <span class="kpi-label">{{ tile.label }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% include "_sections.html.jinja" %}
+{% include "_footnotes.html.jinja" %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html.jinja" %}
+{% block extra_style %}
+<style>
+  body { font-family: {{ department.body_font }}; font-size: 9.5pt; }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid {{ department.primary_color }};
+    padding-bottom: 6pt;
+    margin-bottom: 10pt;
+  }
+  .header h1 {
+    font-family: {{ department.heading_font }};
+    font-size: 14pt;
+    letter-spacing: 0.02em;
+    color: {{ department.primary_color }};
+    margin: 0;
+  }
+  .header .doc-meta {
+    font-family: {{ department.heading_font }};
+    font-size: 8pt;
+    color: #666666;
+    text-align: right;
+  }
+  h2 {
+    font-family: {{ department.heading_font }};
+    font-size: 11pt;
+    color: {{ department.primary_color }};
+    margin-top: 16pt;
+    margin-bottom: 5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  table { font-size: 8pt; }
+  th, td { padding: 3pt 5pt; }
+  th {
+    background-color: {{ department.primary_color }};
+    color: #ffffff;
+    font-family: {{ department.heading_font }};
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    border-radius: {{ department.badge_shape | default('0') }};
+  }
+  tr.total td {
+    border-top: 1.5pt solid {{ department.primary_color }};
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="header">
+  <h1 class="doc-title">{{ title }}</h1>
+  <div class="doc-meta">{{ company_name }}<br>{{ report_date }}<br>{{ prepared_by }}</div>
+</div>
+
+{% include "_sections.html.jinja" %}
+{% include "_footnotes.html.jinja" %}
+{% endblock %}
